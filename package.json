@@ -1,0 +1,24 @@
+{
+  "name": "playwright-testing",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "cucumber-js --config cucumber.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@cucumber/pretty-formatter": "^1.0.1",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.14.1",
+    "dotenv": "^16.5.0",
+    "playwright": "^1.52.0"
+  },
+  "dependencies": {
+    "generate-password": "^1.7.1",
+    "mailosaur": "^8.8.1"
+  }
+}
