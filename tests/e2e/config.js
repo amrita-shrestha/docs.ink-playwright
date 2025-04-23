@@ -1,10 +1,9 @@
 const withHttp = (url) => (/^https?:\/\//i.test(url) ? url : `http://${url}`);
 
 export const config = {
-    // environment
-    assets: './tests/e2e/fileForUpload',
-    apiKey : process.env.MAILOSAUR_API_KEY ?? "uSovCnQYHDskGpyvEcBnX0h9IVjaHflf",
-    serverId: process.env.MAILOSAUR_SERVER_ID ?? "hi3yrhsj",
+    apiKey : process.env.MAILOSAUR_API_KEY ?? "add-your-own-api-key",
+    serverId: process.env.MAILOSAUR_SERVER_ID ?? "add-your-own-server-id",
+    serverDomain: process.env.MAILOSAUR_SERVER_DOMAIN ?? "add-your-own-server-domain",
     get baseUrl() {
         return withHttp(process.env.BASE_URL || 'https://dev.docs.ink/');
     },

@@ -4,11 +4,11 @@ import { chromium, firefox, webkit } from 'playwright';
 import { config } from './config.js';
 import path from 'path';
 import fs from 'fs';
+import {credentialStorage} from "./utils/CredentialStorage.js";
 
 setDefaultTimeout(config.timeout * 1000);
 
 let browser;
-let page;
 
 BeforeAll(async function () {
     const browserConfiguration = {
@@ -64,6 +64,7 @@ Before(async function () {
 });
 
 After(async function (scenarioResult) {
+    credentialStorage.clearCredentials();
     if (scenarioResult?.result?.status === 'FAILED') {
         if (config.reportTracing) {
             const currentScenario = scenarioResult.pickle.name.trim().replace(/\s/g, '_');

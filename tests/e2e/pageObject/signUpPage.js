@@ -1,5 +1,5 @@
 import Mailosaur from 'mailosaur';
-import { emailStorage } from '../utils/emailStorage.js';
+import { credentialStorage } from '../utils/CredentialStorage.js';
 import { config } from '../config.js';
 
 class SignUpPage {
@@ -23,17 +23,17 @@ class SignUpPage {
         await this.page.goto('https://dev.docs.ink/register');
     }
 
-    async signUp(){
-        const testEmail = emailStorage.generateTestEmail();
-        const testPassword = emailStorage.generateStrongPassword();
+    async signUp(data){
+        const { firstName, lastName, email, phone, password, companyName } = data;
+        const testEmail = email + credentialStorage.generateTestEmail();
 
-        await this.page.fill(this.firstNameInput, "Test");
-        await this.page.fill(this.lastNameInput, "Test");
+        await this.page.fill(this.firstNameInput, firstName);
+        await this.page.fill(this.lastNameInput, lastName);
         await this.page.fill(this.emailInput, testEmail);
-        await this.page.fill(this.phoneInput, "+977 9861839333");
-        await this.page.fill(this.passwordInput, testPassword);
-        await this.page.fill(this.confirmPasswordInput, testPassword);
-        await this.page.fill(this.companyInput, "xyz");
+        await this.page.fill(this.phoneInput, phone);
+        await this.page.fill(this.passwordInput, password);
+        await this.page.fill(this.confirmPasswordInput, password);
+        await this.page.fill(this.companyInput, companyName);
 
         await this.page.locator(this.checkbox).click();
         await this.page.locator(this.submitButton).click();
@@ -42,12 +42,13 @@ class SignUpPage {
             timeout: 60000
         };
         const mailosaur = new Mailosaur(config.apiKey);
-        const email = await mailosaur.messages.get(config.serverId, searchCriteria);
-        const code = email.html.codes[0].value;
+        const emailContent = await mailosaur.messages.get(config.serverId, searchCriteria);
+        const code = emailContent.html.codes[0].value;
         await this.page.fill(this.otpInput, code);
         await this.page.locator(this.submitButton).click();
-        emailStorage.setTestEmail(testEmail);
+        credentialStorage.setCredentials(email,{email:testEmail, password});
     }
+
     async getSuccessMessage(){
         return  await this.page.textContent(this.successMessageBox)
     }

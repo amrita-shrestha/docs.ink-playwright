@@ -1,3 +1,11 @@
+## Requirement
+- create account on [Mailosaur](https://mailosaur.com/)
+- create api key
+- set SERVER_ID , API_kEY, SERVER_DOMAIN while running test or directly in config.js
+  - MAILOSAUR_API_KEY = API_kEY
+  - MAILOSAUR_SERVER_ID = SERVER_ID
+  - MAILOSAUR_SERVER_DOMAIN = SERVER_DOMAIN
+
 ## Test Directory Structure
 ```
         tests
@@ -53,11 +61,11 @@ PWDEBUG=1 npm test tests/e2e/features/login.feature:6
 
 HEADLESS=true npm test tests/e2e/features/login.feature:6
 
-MONITOR_XHRS=true npm test tests/e2e/features/login.feature:6
+MONITOR_XHRS=true npm test tests/e2e/features/login.feature:33
 
-RECORD_VIDEO=true npm test tests/e2e/features/login.feature:6
+RECORD_VIDEO=true npm test tests/e2e/features/login.feature:33
 
-REPORT_TRACING=true npm test tests/e2e/features/login.feature:6
+REPORT_TRACING=true npm test tests/e2e/features/login.feature:33
 ```
 
 #### Viewing the Trace Reports
@@ -74,3 +82,30 @@ npx playwright show-trace path/to/file.zip
 We have two environment variables available for debugging:
 1. **RECORD_VIDEO**: true (to record video)
 2. **MONITOR_XHRS**: true (to record response)
+
+## Task Done
+1. Developed Playwright UI tests using Gherkin syntax 
+2. Set up test lifecycle hooks (e.g., Before, After)
+3. Enabled video recording of test sessions
+4. Integrated Mailosaur for handling temporary email addresses 
+5. Enabled Trace Viewer for debugging test flows 
+6. Added clean-up logic after test execution 
+7. Implemented XHR request/response logging 
+8. Tests run across multiple browsers 
+9. Store logic for user credential
+10. Supports configuration via environment variables 
+
+### Tests case 
+Limited tests cases has been implemented with other playwright features. 
+When scenario fails, it will take some time to generate report in "tests/reports"
+```script
+RECORD_VIDEO=true npm test tests/e2e/features/login.feature:33
+```
+
+|feature| scenario                                                                |automated
+|-----|-------------------------------------------------------------------------|---
+|signUp| signUp with valid ceredential                                           | yes
+|signUp| signUp with invalid ceredential                                         | no because automating process is same
+|login | user logs in successfully with valid credentials                        |yes
+|login | user tries to logs in with invalid valid credentials                    |yes
+|login | user tries to logs in with invalid valid credentials (failing scenario) |yes (will fail and generate report)
